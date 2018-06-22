@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">InventoryApp</string>
+    <string name="default_text">Number of columns:0</string>
+    <string name="default_button_text">ADD NEW COLUMN</string>
+    <string name="table_count_display">Number of columns :</string>
+</resources>
