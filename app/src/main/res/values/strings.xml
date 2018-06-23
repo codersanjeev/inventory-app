@@ -3,4 +3,11 @@
     <string name="default_text">Number of columns:0</string>
     <string name="default_button_text">ADD NEW COLUMN</string>
     <string name="table_count_display">Number of columns :</string>
+    <string name="contents_text">Contents of the Table will be displayed here</string>
+    <string name="button_display">Display Contents</string>
+    <string name="product_title">Android Fundamentals</string>
+    <string name="supplier_name">Udacity</string>
+    <string name="supplier_number">9896341208</string>
+    <string name="failed_error">Insertion of new row failed</string>
+    <string name="succes_toast">Insertion of new row was successful</string>
 </resources>
