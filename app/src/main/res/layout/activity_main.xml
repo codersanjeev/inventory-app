@@ -1,33 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+<RelativeLayout android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="@dimen/margin">
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <TextView
-        android:id="@+id/column_count_display"
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/list_view"/>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:src="@drawable/fab_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/default_text" />
-
-    <TextView
-        android:id="@+id/column_contents_display"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/column_count_display"
-        android:text="@string/contents_text" />
-
-    <Button
-        android:id="@+id/add_new_column"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/column_contents_display"
-        android:text="@string/default_button_text" />
-
-    <Button
-        android:id="@+id/display_contents"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/add_new_column"
-        android:text="@string/button_display" />
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="16dp" />
 </RelativeLayout>

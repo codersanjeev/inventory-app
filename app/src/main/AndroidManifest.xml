@@ -16,6 +16,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".AddNewProductActivity"
+            android:parentActivityName=".MainActivity"
+            />
+        <provider
+            android:authorities="com.example.sanjeev.inventoryapp"
+            android:exported="false"
+            android:name=".data.ProductProvider"/>
     </application>
 
 </manifest>
