@@ -1,92 +1,137 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:layout_width="match_parent"
-    android:layout_margin="16dp"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:layout_margin="@dimen/margin16"
+    android:orientation="vertical">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
         <TextView
-            android:text="PRODUCT NAME"
-            android:gravity="center_vertical"
+            android:layout_width="@dimen/margin0"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent" />
+            android:gravity="center_vertical"
+            android:text="@string/product_name" />
+
         <EditText
             android:id="@+id/in_product_name"
-            android:inputType="text"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/margin0"
             android:layout_height="match_parent"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:hint="@string/product_name_hint"
+            android:inputType="text" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
         <TextView
-            android:text="PRODUCT COST"
+            android:layout_width="@dimen/margin0"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center_vertical"
-            android:layout_width="0dp"
-            android:layout_height="match_parent" />
+            android:text="@string/product_cost" />
+
         <EditText
             android:id="@+id/in_product_cost"
-            android:inputType="number"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/margin0"
             android:layout_height="match_parent"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:hint="@string/product_cost_hint"
+            android:inputType="number" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
         <TextView
-            android:text="SUPPLIER NAME"
+            android:layout_width="@dimen/margin0"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center_vertical"
-            android:layout_width="0dp"
-            android:layout_height="match_parent" />
+            android:text="@string/supplier_name" />
+
         <EditText
             android:id="@+id/in_supplier_name"
-            android:inputType="text"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/margin0"
             android:layout_height="match_parent"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:hint="@string/supplier_name_hint"
+            android:inputType="text" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
         <TextView
+            android:layout_width="@dimen/margin0"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="SUPPLIER PH. NO."
             android:gravity="center_vertical"
-            android:layout_width="0dp"
-            android:layout_height="match_parent" />
+            android:text="@string/supplier_number" />
+
         <EditText
             android:id="@+id/in_supplier_number"
-            android:inputType="phone"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/margin0"
             android:layout_height="match_parent"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:hint="@string/supplier_number_hint"
+            android:inputType="phone" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
         <TextView
+            android:layout_width="@dimen/margin0"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:layout_width="0dp"
-            android:text="QUANTITY"
             android:gravity="center_vertical"
-            android:layout_height="match_parent" />
+            android:text="@string/quantity" />
+
         <EditText
             android:id="@+id/in_quantity"
-            android:inputType="number"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/margin0"
             android:layout_height="match_parent"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:hint="@string/quantity_hint"
+            android:inputType="number" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="@dimen/margin0"
+            android:layout_height="match_parent"
+            android:layout_weight="2" />
+
+        <Button
+            android:id="@+id/quantity_plus"
+            android:layout_width="@dimen/margin0"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/increase_quantity" />
+
+        <Button
+            android:id="@+id/quantity_minus"
+            android:layout_width="@dimen/margin0"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/decrease_quantity" />
     </LinearLayout>
 </LinearLayout>

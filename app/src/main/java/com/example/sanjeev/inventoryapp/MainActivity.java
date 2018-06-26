@@ -39,15 +39,19 @@ public class MainActivity extends AppCompatActivity implements android.app.Loade
 
         listView = findViewById(R.id.list_view);
         View emptyView = findViewById(R.id.emptyView);
+        // Set empty view, if the list has no contents
         listView.setEmptyView(emptyView);
         adapter = new ProductCursorAdapter(this, null);
         listView.setAdapter(adapter);
+        // start loader in background thread
         getLoaderManager().initLoader(PRODUCT_LOADER, null, this);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
                 Intent in = new Intent(getApplicationContext(), AddNewProductActivity.class);
+                // Launch editor activity on item click
                 Uri currentUri = ContentUris.withAppendedId(Contract.NewEntry.CONTENT_URI, id);
+                // Pass the data to know which item was clicked
                 in.setData(currentUri);
                 startActivity(in);
             }
@@ -72,6 +76,8 @@ public class MainActivity extends AppCompatActivity implements android.app.Loade
 
     @Override
     public android.content.Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        // Read the data which is necessary
+        // so, using projection
         String[] projection = {
                 Contract.NewEntry._ID,
                 Contract.NewEntry.COLUMN_PRODUCT_NAME,

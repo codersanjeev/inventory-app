@@ -5,4 +5,10 @@
         app:showAsAction="always"
         android:title="save"
         android:icon="@drawable/ic_done"/>
+    <item android:id="@+id/delelte_product"
+        app:showAsAction="never"
+        android:title="Delete Product"/>
+    <item android:id="@+id/contact_supplier"
+        app:showAsAction="never"
+        android:title="Contact Supplier"/>
 </menu>

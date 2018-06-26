@@ -10,8 +10,12 @@ public class Contract {
         // Empty constructor to avoid initialisation
     }
 
+    // Unique string for accessing database
+    // generally, package name is used
     public static final String CONTENT_AUTHORITY = "com.example.sanjeev.inventoryapp";
+    // Base Uri for accessing database
     public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
+    // String to be appended for accessing product table
     public static final String PATH_PRODUCTS = "product";
 
     // This class defines constants for the table

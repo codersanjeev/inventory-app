@@ -11,13 +11,17 @@ import android.util.Log;
 
 public class ProductProvider extends ContentProvider {
 
+    // Code for accessing table
     public static final int PRODUCTS = 200;
+    // Code for accessing a row in the table
     public static final int PRODUCT_ID = 201;
 
+    // Database Helper Object
     DbHelper mDBHelper;
 
     private static final UriMatcher sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
+    // Addition of recognisable Uris to UriMatcher
     static {
         sUriMatcher.addURI(Contract.CONTENT_AUTHORITY, Contract.PATH_PRODUCTS, PRODUCTS);
         sUriMatcher.addURI(Contract.CONTENT_AUTHORITY, Contract.PATH_PRODUCTS + "/#", PRODUCT_ID);
@@ -25,19 +29,25 @@ public class ProductProvider extends ContentProvider {
 
     @Override
     public boolean onCreate() {
+        // Initialisation of Database Helper Object
         mDBHelper = new DbHelper(getContext());
         return true;
     }
 
+    // Read the Database
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
+        // Initialise readable database.
         SQLiteDatabase db = mDBHelper.getReadableDatabase();
+        // cursor to store the result
         Cursor cursor;
         switch (sUriMatcher.match(uri)){
             case PRODUCTS :
+                // Read Table
                 cursor = db.query(Contract.NewEntry.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
                 break;
             case PRODUCT_ID :
+                // Read a part of table
                 selection = Contract.NewEntry._ID + "=?";
                 selectionArgs = new String[] {String.valueOf(ContentUris.parseId(uri))};
                 cursor = db.query(Contract.NewEntry.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
@@ -49,6 +59,7 @@ public class ProductProvider extends ContentProvider {
         return cursor;
     }
 
+    // Return MIME type for uri
     @Override
     public String getType(Uri uri) {
         switch (sUriMatcher.match(uri)){
@@ -61,9 +72,11 @@ public class ProductProvider extends ContentProvider {
         }
     }
 
+    // Delete data from table
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
         SQLiteDatabase db = mDBHelper.getWritableDatabase();
+        // Number of rows which will be deleted
         int numRowsDeleted;
         switch (sUriMatcher.match(uri)){
             case PRODUCTS :
@@ -83,6 +96,7 @@ public class ProductProvider extends ContentProvider {
         return numRowsDeleted;
     }
 
+    // Update the data in table
     @Override
     public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
         switch (sUriMatcher.match(uri)){
@@ -97,6 +111,7 @@ public class ProductProvider extends ContentProvider {
         }
     }
 
+    // Insert new data in table
     @Override
     public Uri insert(Uri uri, ContentValues values) {
         switch (sUriMatcher.match(uri)){
@@ -108,6 +123,9 @@ public class ProductProvider extends ContentProvider {
     }
 
     private Uri insertProduct(Uri uri, ContentValues values){
+        /**
+         * Data Validation
+         */
         if(values.getAsString(Contract.NewEntry.COLUMN_PRODUCT_NAME) == null)
             throw new IllegalArgumentException("Product Requires a name");
         if(values.getAsString(Contract.NewEntry.COLUMN_SUPPLIER_NAME) == null)
@@ -122,8 +140,10 @@ public class ProductProvider extends ContentProvider {
         if(cost != null && cost <= 0)
             throw new IllegalArgumentException("Invalid cost of product");
 
+        // initialise writable database
         SQLiteDatabase db = mDBHelper.getWritableDatabase();
 
+        // insert data into table
         long id = db.insert(Contract.NewEntry.TABLE_NAME, null, values);
         if(id == -1){
             Log.v("insertProduct() method", "Insertion error");
@@ -133,7 +153,11 @@ public class ProductProvider extends ContentProvider {
         return ContentUris.withAppendedId(uri, id);
     }
 
+    // Update existing data in table
     private int updateProduct(Uri uri, ContentValues values, String selection, String[] selectionArgs){
+        /**
+         * Data Validation
+         */
         if(values.containsKey(Contract.NewEntry.COLUMN_PRODUCT_NAME)){
             if(values.getAsString(Contract.NewEntry.COLUMN_PRODUCT_NAME) == null)
                 throw new IllegalArgumentException("Product Requires a name");
@@ -160,6 +184,7 @@ public class ProductProvider extends ContentProvider {
         if(values.size() == 0){
             return 0;
         }
+
         SQLiteDatabase db = mDBHelper.getWritableDatabase();
         int rowsChanged = db.update(Contract.NewEntry.TABLE_NAME, values, selection, selectionArgs);
         if(rowsChanged != 0){
@@ -167,6 +192,4 @@ public class ProductProvider extends ContentProvider {
         }
         return rowsChanged;
     }
-
-
 }
