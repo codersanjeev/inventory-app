@@ -25,7 +25,7 @@ import com.example.sanjeev.inventoryapp.data.Contract;
 public class AddNewProductActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>, View.OnClickListener {
 
     EditText productName, productCost, supplierName, supplierNumber, productQuantity;
-    Button increase_quantity, decrease_quantity;
+    Button increaseQuantity, decreaseQuantity;
     private static final int EXISTING_PRODUCT_LOADER = 0;
     private boolean ProductChanged = false;
     /**
@@ -69,11 +69,11 @@ public class AddNewProductActivity extends AppCompatActivity implements LoaderMa
         supplierName = findViewById(R.id.in_supplier_name);
         supplierNumber = findViewById(R.id.in_supplier_number);
         productQuantity = findViewById(R.id.in_quantity);
-        increase_quantity = findViewById(R.id.quantity_plus);
-        decrease_quantity = findViewById(R.id.quantity_minus);
+        increaseQuantity = findViewById(R.id.quantity_plus);
+        decreaseQuantity = findViewById(R.id.quantity_minus);
         // Buttons which increase or decrease the product quantity in edittext
-        increase_quantity.setOnClickListener(this);
-        decrease_quantity.setOnClickListener(this);
+        increaseQuantity.setOnClickListener(this);
+        decreaseQuantity.setOnClickListener(this);
         productName.setOnTouchListener(mTouchListener);
         productCost.setOnTouchListener(mTouchListener);
         supplierNumber.setOnTouchListener(mTouchListener);
@@ -105,7 +105,6 @@ public class AddNewProductActivity extends AppCompatActivity implements LoaderMa
         switch (item.getItemId()) {
             case R.id.action_save:
                 insertProduct();
-                finish();
                 return true;
             case android.R.id.home:
                 if(!ProductChanged){
@@ -125,7 +124,8 @@ public class AddNewProductActivity extends AppCompatActivity implements LoaderMa
                 String supplier_number = supplierNumber.getText().toString().trim();
                 Intent in = new Intent(Intent.ACTION_DIAL);
                 in.setData(Uri.parse("tel:" + supplier_number));
-                startActivity(in);
+                if(in.resolveActivity(getPackageManager()) != null)
+                    startActivity(in);
                 return true;
             case R.id.delelte_product :
                 showConfirmationDialog();
@@ -200,11 +200,35 @@ public class AddNewProductActivity extends AppCompatActivity implements LoaderMa
 
     private void insertProduct() {
         ContentValues values = new ContentValues();
-        values.put(Contract.NewEntry.COLUMN_PRODUCT_NAME, productName.getText().toString().trim());
-        values.put(Contract.NewEntry.COLUMN_SUPPLIER_NAME, supplierName.getText().toString().trim());
-        values.put(Contract.NewEntry.COLUMN_SUPPLIER_PHONE_NUMBER, supplierNumber.getText().toString().trim());
-        values.put(Contract.NewEntry.COLUMN_PRICE, Integer.parseInt(productCost.getText().toString().trim()));
-        values.put(Contract.NewEntry.COLUMN_QUANTITY, Integer.parseInt(productQuantity.getText().toString().trim()));
+        String mProductName, mSupplierName, mSupplierNumber;
+        int mProductCost, mProductQuantity;
+        try {
+            mProductName = productName.getText().toString().trim();
+            mSupplierName = supplierName.getText().toString().trim();
+            mSupplierNumber = supplierNumber.getText().toString().trim();
+            mProductCost = Integer.parseInt(productCost.getText().toString().trim());
+            mProductQuantity = Integer.parseInt(productQuantity.getText().toString().trim());
+        }
+        catch(Exception e){
+            Toast.makeText(this, R.string.invalid_values_message, Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if(mSupplierNumber.length() != 10){
+            Toast.makeText(this, R.string.invalid_number_message, Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if(mProductCost < 0 || mProductQuantity == 0){
+            Toast.makeText(this, R.string.invalid_message, Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        values.put(Contract.NewEntry.COLUMN_PRODUCT_NAME, mProductName);
+        values.put(Contract.NewEntry.COLUMN_SUPPLIER_NAME, mSupplierName);
+        values.put(Contract.NewEntry.COLUMN_SUPPLIER_PHONE_NUMBER, mSupplierNumber);
+        values.put(Contract.NewEntry.COLUMN_PRICE, mProductCost);
+        values.put(Contract.NewEntry.COLUMN_QUANTITY, mProductQuantity);
         if(currentUri == null){
             Uri newUri = getContentResolver().insert(Contract.NewEntry.CONTENT_URI, values);
             if(newUri == null){
@@ -212,6 +236,7 @@ public class AddNewProductActivity extends AppCompatActivity implements LoaderMa
             }
             else {
                 Toast.makeText(this, R.string.insert_product_success, Toast.LENGTH_SHORT).show();
+                finish();
             }
         }
         else{
@@ -221,6 +246,7 @@ public class AddNewProductActivity extends AppCompatActivity implements LoaderMa
             }
             else{
                 Toast.makeText(this, R.string.update_product_success, Toast.LENGTH_SHORT).show();
+                finish();
             }
         }
     }

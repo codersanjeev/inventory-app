@@ -32,4 +32,7 @@
     <string name="price">Price</string>
     <string name="quantity_text">Quantity</string>
     <string name="sell">SELL</string>
+    <string name="invalid_values_message">Please fill all the values.</string>
+    <string name="invalid_number_message">Please enter valid phone number</string>
+    <string name="invalid_message">Please enter valid product cost and quantity</string>
 </resources>
